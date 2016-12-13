@@ -6,7 +6,7 @@
 /*   By: thandung <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:12:14 by thandung          #+#    #+#             */
-/*   Updated: 2016/07/10 18:12:22 by thandung         ###   ########.fr       */
+/*   Updated: 2016/12/13 14:53:54 by thandung         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ void	ft_execute_commands(char **command, char *get_line, char **envp)
 		ft_unsetting_env(get_line, envp);
 	else if (ft_strequ(command[0], "clear"))
 		write(1, "\033c", 3);
+	else if (access(command[0],X_OK) == 0)
+		ft_execute(envp, command);
+
 }
 
 void	ft_run_commands(char **user_comm, char *get_line, char **envp)
@@ -52,7 +55,7 @@ void	ft_run_commands(char **user_comm, char *get_line, char **envp)
 
 	sp = ft_strsplit(get_line, ' ');
 	user_comm = ft_check_env(user_comm, envp);
-	if (ft_search_command(user_comm[0]))
+	if (ft_search_command(user_comm[0]) || (access(user_comm[0], X_OK) == 0))
 	{
 		if ((pid = fork()) < 0)
 			ft_putendl("error while forking");

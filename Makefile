@@ -6,7 +6,7 @@
 #    By: thandung <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/10 17:49:49 by thandung          #+#    #+#              #
-#    Updated: 2016/07/10 17:50:08 by thandung         ###   ########.fr        #
+#    Updated: 2016/12/13 16:05:17 by thandung         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ $(NAME):
 	@make -C libft/
 	@gcc $(FLAGS) $(OPTIONS) $(SRC)
 	@gcc -o $(NAME) $(OBJECT) -L libft/ -lft
-	@chmod 111 $(NAME)
+	@chmod 711 $(NAME)
 	@echo "\x1B[32mCompiled project.\x1B[0m"
 
 clean:

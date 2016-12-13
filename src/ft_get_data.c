@@ -6,7 +6,7 @@
 /*   By: thandung <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:12:14 by thandung          #+#    #+#             */
-/*   Updated: 2016/07/10 18:12:20 by thandung         ###   ########.fr       */
+/*   Updated: 2016/12/13 15:55:03 by thandung         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_more(char **envp, char **split)
 	{
 		str = ft_strjoin(new[i], "/");
 		str = ft_strjoin(str, split[0]);
-		if (access(str, F_OK) == 0)
+		if (access(str, X_OK) == 0)
 			return (str);
 		i++;
 	}
@@ -58,7 +58,16 @@ void	ft_execute(char **envp, char **sp)
 
 	pid = fork();
 	if (pid == 0)
-		execve(ft_more(envp, sp), &sp[0], envp);
+	{
+		if (access(sp[0],X_OK) != 0)
+		{
+			execve(ft_more(envp, sp), &sp[0], envp);
+		}
+		else
+		{
+			execve(sp[0], &sp[0], envp);
+		}
+	}
 	if (pid > 0)
 		wait(NULL);
 }
